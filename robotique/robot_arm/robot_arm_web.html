@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Micro Arm</title>
+<SCRIPT>
+xmlHttp=createXmlHttpObject();
+function createXmlHttpObject()
+{
+  if(window.XMLHttpRequest) { xmlHttp=new XMLHttpRequest(); }
+  else { xmlHttp=new ActiveXObject('Microsoft.XMLHTTP'); }
+  return xmlHttp;
+}
+
+function process()
+{
+  if(xmlHttp.readyState==0||xmlHttp.readyState==4)
+  {
+    xmlHttp.onreadystatechange=function()
+    {
+      if(xmlHttp.readyState==4&&xmlHttp.status==200)
+      {
+        xmlDoc=xmlHttp.responseXML;
+        for(i=0;i<5;i++)
+        {
+          xmlmsg=xmlDoc.getElementsByTagName('slidervalue'+i)[0].firstChild.nodeValue;
+          document.getElementById('slider'+i).value=xmlmsg;
+          document.getElementById('Slidervalue'+i).innerHTML=xmlmsg; 
+        }
+      }
+    }
+    xmlHttp.open('GET','construit_xml',true);
+    xmlHttp.send(null);
+  }
+}
+
+function slider(cnt)
+{
+  sliderValue=document.getElementById('slider'+cnt).value;
+  document.getElementById('Slidervalue'+cnt).innerHTML=sliderValue;
+  if(xmlHttp.readyState==0||xmlHttp.readyState==4)
+  {
+    xmlHttp.open('GET','set_servo'+ cnt + ':' + sliderValue,true);
+    xmlHttp.send(null);
+  }
+}
+</SCRIPT>
+
+<BODY onload="process()">
+  <style>
+    button 
+    {
+      height: 30px;
+      width: 170px;
+      font-size: 100%;
+      position: center;  
+    }
+  </style>
+  <div align="Center">
+    <H2>Télécommande bras articulé</H2>
+    Pince : <A id=Slidervalue4> </A> </br>
+    <input style="width:250px; height:50px" type="range" id="slider4" ONINPUT=slider(4) min="75" max="110" step="1"/> </br>
+    Bras_3 : <A id=Slidervalue3> </A> </br>
+    <input style="width:250px; height:50px" type="range" id="slider3" ONINPUT=slider(3) min="20" max="90" step="1"/> </br> 
+    Bras_2 : <A id=Slidervalue2> </A> </br>
+    <input style="width:250px; height:50px" type="range" id="slider2" ONINPUT=slider(2) min="90" max="120" step="1"/> </br> 
+    Bras_1 : <A id=Slidervalue1> </A> </br>
+    <input style="width:250px; height:50px" type="range" id="slider1" ONINPUT=slider(1) min="80" max="120" step="1"/> </br> 
+    Pivot : <A id=Slidervalue0> </A> </br>
+    <input style="width:250px; height:50px" type="range" id="slider0" ONINPUT=slider(0) min="20" max="100" step="1"/> </br> 
+    </br>
+    <form action="/" method="PUT">
+    <button name="CMD" value="init_scenario" type="submit">Init</button>  
+    <button name="CMD" value="sauve" type="submit">Sauve</button>
+    </br> </br>
+    <button name="CMD" value="play_one" type="submit">Executer une fois</button>  
+    <button name="CMD" value="play_infini" type="submit">Executer en boucle</button>
+    </form>
+</div> 
+</BODY>
+</HTML>
