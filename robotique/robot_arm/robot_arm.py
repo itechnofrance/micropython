@@ -408,6 +408,7 @@ oled.text("Bras", 48, 10)
 oled.text("Robotique", 32, 20)
 oled.show()
 delai_initialisation()  # délai 
+i2c_peripheriques = i2c.scan()  # corrige pb accès PAJ7620 à la mise sous tension
 # déclaration PAJ7620
 g = paj7620.PAJ7620(i2c)
 # déclaration des servos avec une fréquence de 50 Hertz
