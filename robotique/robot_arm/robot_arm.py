@@ -393,8 +393,7 @@ def udp_server():
             elif nouvelle_position_bras_1 > POSITION_BRAS_1_MIN:
                 nouvelle_position_bras_1 -= 1
                 bras_1(nouvelle_position_bras_1)
-            
-    communication.close()
+    #communication.close()
     status_udp_server_thread = False
 
 # déclaration I2C pour la communication avec le capteur PAJ7620 et l'écran OLED SSD1306
@@ -409,6 +408,7 @@ oled.text("Robotique", 32, 20)
 oled.show()
 delai_initialisation()  # délai 
 i2c_peripheriques = i2c.scan()  # corrige pb accès PAJ7620 à la mise sous tension
+time.sleep(1)
 # déclaration PAJ7620
 g = paj7620.PAJ7620(i2c)
 # déclaration des servos avec une fréquence de 50 Hertz
@@ -443,7 +443,7 @@ while True:
                 oled.text("Mode WEB", 30, 0)
                 oled.text("WiFi : microarm", 0, 10)
                 oled.text("Adr  : ", 0, 20)
-                oled.text("  1992.168.4.1", 0, 30)
+                oled.text("  192.168.4.1", 0, 30)
                 oled.text("Stop : geste", 0, 40)
                 oled.text("  anti-horaire", 0, 50)
                 oled.show()
@@ -461,7 +461,7 @@ while True:
                     if status_web_server_thread == True:
                         web_server_thread = False
                     attente = False
-                time.sleep(0.1)  # délai pour le traitement du capteur PAJ7620
+                time.sleep(0.5)  # délai pour le traitement du capteur PAJ7620
             attente = True
         if selection_option == 1:  # pilote le bras robotique par les gestes
             bras_par_geste = True
@@ -508,7 +508,7 @@ while True:
                     pince(POSITION_PINCE_MAX)
                 if geste == GESTE_ANTI_HORAIRE:
                     bras_par_geste = False
-                time.sleep(0.1)  # délai pour le traitement du capteur PAJ7620
+                time.sleep(0.5)  # délai pour le traitement du capteur PAJ7620
         if selection_option == 2:  # pilote le bras robotique par le protocole UDP
             if not status_udp_server_thread:  
                 # on vérifie que le thread pour le mode UDP n'est pas lancé
@@ -534,6 +534,6 @@ while True:
                     if status_udp_server_thread == True:
                         udp_server_thread = False
                     attente = False
-                time.sleep(0.1)  # délai pour le traitement du capteur PAJ7620
+                time.sleep(0.5)  # délai pour le traitement du capteur PAJ7620
             attente = True
-    time.sleep(0.1)  # délai pour le traitement du capteur PAJ7620
+    time.sleep(0.5)  # délai pour le traitement du capteur PAJ7620
