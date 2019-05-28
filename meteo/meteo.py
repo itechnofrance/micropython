@@ -15,10 +15,10 @@ import json
 import urequests
 from machine import RTC
 
-ssid = "Livebox-C176"
-password = "6mYkruxEfmxcwZeS5e"
+ssid = "ssid wifi"
+password = "clé"
 adresse_openweathermap = "http://api.openweathermap.org/data/2.5/weather?lat=50.02&lon=1.31&units=metric&APPID="
-cle_api_openweathermap = "d4b13a3b9b03a89d13a7613b32d69955"
+cle_api_openweathermap = "xxxxxxxxxxxxxxxxxxxxxxxx"
 url_openweathermap = adresse_openweathermap + cle_api_openweathermap
 url_worldtimeapi = "http://worldtimeapi.org/api/timezone/Europe/Paris"
 requete_web_delai = 60000  # effectue une requête toutes les 60s
